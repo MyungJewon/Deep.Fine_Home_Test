@@ -1,17 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using System.IO;
+using System; // 이벤트 정의를 위해 추가
+using Dummiesman;
+using UnityEditor.PackageManager;
+
 public class LoaderModule : MonoBehaviour
 {
-    public LoaderModule()
+    public event Action<GameObject> OnLoadCompleted; 
+
+    public void LoadAsset(string assetName)
     {
-        public event Action<GameObject> OnLoadCompleted; // 모델 로드 완료 이벤트
-
-        public void LoadAsset(string assetName){}
-
+        GameObject loadedAsset = new OBJLoader().Load(assetName);
+        OnLoadCompleted?.Invoke(loadedAsset);
     }
-   
 }
