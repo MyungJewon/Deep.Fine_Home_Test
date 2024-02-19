@@ -9,7 +9,10 @@ public class LoaderModule : MonoBehaviour
 
     public void LoadAsset(string assetName)
     {
+        Debug.Log("3");
         GameObject loadedAsset = new OBJLoader().Load(assetName);
+        
         OnLoadCompleted?.Invoke(loadedAsset);
+        
     }
 }
