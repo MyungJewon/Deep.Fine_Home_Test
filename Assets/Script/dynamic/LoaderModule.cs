@@ -5,11 +5,14 @@ using UnityEditor.PackageManager;
 
 public class LoaderModule : MonoBehaviour
 {
+    ObjImporter objImporter;
     public event Action<GameObject> OnLoadCompleted; 
 
+    public void Start(){
+        objImporter=
+    }
     public void LoadAsset(string assetName)
     {
-        Debug.Log("3");
         GameObject loadedAsset = new OBJLoader().Load(assetName);
         
         OnLoadCompleted?.Invoke(loadedAsset);
