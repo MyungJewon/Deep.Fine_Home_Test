@@ -1,21 +1,15 @@
 using UnityEngine;
 using System; // 이벤트 정의를 위해 추가
-using Dummiesman;
 using UnityEditor.PackageManager;
 
 public class LoaderModule : MonoBehaviour
 {
-    ObjImporter objImporter;
+    ObjImporter objImporter= new ObjImporter();
     public event Action<GameObject> OnLoadCompleted; 
 
-    public void Start(){
-        objImporter=
-    }
     public void LoadAsset(string assetName)
     {
-        GameObject loadedAsset = new OBJLoader().Load(assetName);
-        
-        OnLoadCompleted?.Invoke(loadedAsset);
-        
+         GameObject loadedAsset = objImporter.LoadObj(assetName);
+         OnLoadCompleted?.Invoke(loadedAsset);      
     }
 }

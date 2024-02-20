@@ -15,16 +15,18 @@ public class AssetLoaderAsync : MonoBehaviour
     private LoaderModuleAsync loaderModuleasync; 
 
     private async void Start()
-    {
+    {//예외 추가할것
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", "", "obj");
-        for(int i=0;i<10;i++)
-            await Load(selectedAssetName);
+        await Load(selectedAssetName);
     }
 
     public async Task Load(string assetName)
     {
-        GameObject loadedAsset = loaderModuleasync.LoadAsset(assetName);
-        loadedAsset.transform.SetParent(transform);
+        for (int i = 0; i < 10; i++) {
+            GameObject loadedAsset = loaderModuleasync.LoadAsset(assetName);
+            loadedAsset.transform.SetParent(transform);
          // To do
+         }
+
     }
 }
