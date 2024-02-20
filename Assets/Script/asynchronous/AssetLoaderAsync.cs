@@ -17,6 +17,7 @@ public class AssetLoaderAsync : MonoBehaviour
     private async void Start()
     {//예외 추가할것
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", "", "obj");
+        
         await Load(selectedAssetName);
     }
 
