@@ -7,7 +7,7 @@ public class LoaderModuleAsync : MonoBehaviour
 {
     ObjImporter objImporter = new ObjImporter();
 
-    public GameObject LoadAsset(string assetName)
+    public async Task<GameObject> LoadAsset(string assetName)
     {
         GameObject loadedAsset = objImporter.LoadObj(assetName);
         return loadedAsset;
