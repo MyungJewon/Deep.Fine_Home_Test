@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Threading.Tasks;
+using System;
+using UnityEngine.Events;
+public class Verticesmap { 
 
+    public List<Vector3> vertices = new List<Vector3>();
+    public List<Vector2> uv = new List<Vector2>();
+    public List<int> triangles = new List<int>();
+    public Verticesmap(List<Vector3> vertices, List<Vector2> uv, List<int> triangles)
+    {
+        this.vertices = vertices; this.uv = uv; this.triangles = triangles;
+    }
+}
 public class ObjImporter : MonoBehaviour
 {
     public GameObject LoadObj(string path)
     {
-        // 파일에서 모든 라인을 읽음
         string[] lines = File.ReadAllLines(path);
 
         List<Vector3> vertices = new List<Vector3>();
@@ -59,5 +70,46 @@ public class ObjImporter : MonoBehaviour
         meshRenderer.material = new Material(Shader.Find("Standard")); // 적절한 Material을 설정합니다.
 
         return obj;
+    }
+
+    public Verticesmap LoadObjAsync(string path)
+    {
+        string[] lines = File.ReadAllLines(path);
+
+        List<Vector3> vertices = new List<Vector3>();
+        List<Vector2> uv = new List<Vector2>();
+        List<int> triangles = new List<int>();
+
+        foreach (var line in lines)
+        {
+            if (line.StartsWith("v ")) // 정점 데이터
+            {
+                var vertexData = line.Substring(2).Split(' ');
+                vertices.Add(new Vector3(
+                    float.Parse(vertexData[0]),
+                    float.Parse(vertexData[1]),
+                    float.Parse(vertexData[2])));
+            }
+            else if (line.StartsWith("vt ")) // 텍스처 좌표 데이터
+            {
+                var uvData = line.Substring(3).Split(' ');
+                uv.Add(new Vector2(
+                    float.Parse(uvData[0]),
+                    float.Parse(uvData[1])));
+            }
+            else if (line.StartsWith("f ")) // 면 데이터
+            {
+                var faceData = line.Substring(2).Split(' ');
+                foreach (var vertex in faceData)
+                {
+                    var vertexInfo = vertex.Split('/');
+                    // OBJ 인덱스는 1부터 시작하지만, Unity 인덱스는 0부터 시작합니다.
+                    triangles.Add(int.Parse(vertexInfo[0]) - 1);
+                }
+            }
+        }
+        Verticesmap verticesmap= new Verticesmap(vertices,uv, triangles);
+        return verticesmap;
+        // 메쉬 생성 및 적용
     }
 }

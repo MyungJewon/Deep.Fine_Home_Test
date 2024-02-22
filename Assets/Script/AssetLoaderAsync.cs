@@ -22,9 +22,9 @@ public class AssetLoaderAsync : MonoBehaviour
 
     public async Task Load(string assetNames)
     {
-        var loadedAssets= Task.Run(()=> loaderModuleasync.LoadAssetAsync(assetNames));
-        GameObject loadedAsset = await loadedAssets;
-        loadedAsset.transform.SetParent(transform);
-        loaderModuleasync = new LoaderModule();
+         var loadedAssets = loaderModuleasync.LoadAssetAsync(assetNames);
+         
+         GameObject loadedAsset = await loadedAssets;
+         loadedAsset.transform.SetParent(transform);
     }
 }
