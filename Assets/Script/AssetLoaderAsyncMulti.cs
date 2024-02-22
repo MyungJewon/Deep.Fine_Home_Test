@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class AssetLoaderAsyncMulti : MonoBehaviour
 {
     [field: SerializeField]
-    private LoaderModuleAsyncMulti loaderModuleAsyncMulti;
+    private LoaderModule loaderModuleAsyncMulti;
     public string fileExtension = ".obj";
     public string[] LoadFiles(string directoryPath)
     {
@@ -25,7 +25,7 @@ public class AssetLoaderAsyncMulti : MonoBehaviour
     }
     private async void Start()
     {
-        loaderModuleAsyncMulti = new LoaderModuleAsyncMulti();
+        loaderModuleAsyncMulti = new LoaderModule();
         string selectedAssetName = EditorUtility.OpenFolderPanel("Select obj model", "", "obj");
         string[] directoryPath = LoadFiles(selectedAssetName);
         await Load(directoryPath);
@@ -37,16 +37,24 @@ public class AssetLoaderAsyncMulti : MonoBehaviour
         
         for (int i = 0; i < assetNames.Length; i++)
         {
-            tasks.Add(loaderModuleAsyncMulti.LoadAsset(assetNames[i],i));
+            tasks.Add(loaderModuleAsyncMulti.LoadAssetAsync(assetNames[i]));
         }
-        var loadedAssets = await Task.WhenAll(tasks);
-
-        for (int i = 0; i < loadedAssets.Length; i++)
-        {
-            GameObject loadedAsset = loadedAssets[i];
-            loadedAsset.name = "i=" + i; 
+        while(tasks.Count>0){
+            var loadedAssets = await Task.WhenAny(tasks);
+            GameObject loadedAsset =await loadedAssets;
             loadedAsset.transform.SetParent(transform);
-            // To do
+            tasks.Remove(loadedAssets);
         }
+        Debug.Log("작업끝");
+
+        
+
+        // for (int i = 0; i < tasks.Length; i++)
+        // {
+        //     GameObject loadedAsset = loadedAssets[i];
+        //     loadedAsset.name = "i=" + i; 
+        //     loadedAsset.transform.SetParent(transform);
+        //     // To do
+        // }
     }
 }

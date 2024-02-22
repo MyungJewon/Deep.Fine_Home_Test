@@ -12,34 +12,21 @@ using System.Threading.Tasks;
 public class AssetLoaderAsync : MonoBehaviour
 {
     [field: SerializeField]
-    private LoaderModuleAsync loaderModuleasync; 
+    private LoaderModule loaderModuleasync; 
 
     private async void Start()
     {//예외 추가할것
-        loaderModuleasync = new LoaderModuleAsync();
+        loaderModuleasync = new LoaderModule();
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", "", "obj");
-        Debug.Log(selectedAssetName);
         await Load(selectedAssetName);
     }
 
     public async Task Load(string assetNames)
     {
-        //Debug.Log("1");
-        //var loadedAssets=Task.Run(()=>loaderModuleasync.LoadAsset(assetNames));
+        var loadedAssets=Task.Run(()=>loaderModuleasync.LoadAssetAsync(assetNames));
 
-        //GameObject loadedAsset = await loadedAssets;
-        //loadedAsset.transform.SetParent(transform);
-        //// To do
-        var tasks = new List<Task<GameObject>>();
-        tasks.Add(loaderModuleasync.LoadAsset(assetNames));
-        var loadedAssets = await Task.WhenAll(tasks);
-
-        for (int i = 0; i < loadedAssets.Length; i++)
-        {
-            GameObject loadedAsset = loadedAssets[i];
-            loadedAsset.name = "i=" + i;
-            loadedAsset.transform.SetParent(transform);
-            // To do
-        }
+        GameObject loadedAsset = await loadedAssets;
+        loadedAsset.transform.SetParent(transform);
+        // To do
     }
 }
