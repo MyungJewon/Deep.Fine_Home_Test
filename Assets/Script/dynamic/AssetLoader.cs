@@ -7,23 +7,51 @@
 // - 리뷰 포인트: LoaderModule을 구현한 코드에 대해 정확성 리뷰
 using UnityEngine;
 using UnityEditor;
-
+using System.IO;
+using System.Linq;
 public class AssetLoader : MonoBehaviour
 {
     [SerializeField]
     private LoaderModule loaderModule;
+    public string directoryPath = "your/directory/path";
+    public string fileExtension = ".obj";
+
+    public string[] LoadFiles(string directoryPath)
+    {
+        // 해당 디렉토리에서 모든 파일을 가져옵니다.
+        string[] files = Directory.GetFiles(directoryPath, "*" + fileExtension)
+                                  .Where(path => Path.GetExtension(path).Equals(fileExtension))
+                                  .ToArray();
+
+        foreach (var file in files)
+        {
+            Debug.Log("Found file: " + file);
+            // 파일을 처리하는 로직을 여기에 구현합니다.
+        }
+        return files;
+    }
 
     private void Start()
     {
         loaderModule = new LoaderModule();
-        string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", "", "obj");
-        Load(selectedAssetName);
+        //string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", "", "obj");
+        //Load(selectedAssetName);
+        string selectedAssetName = EditorUtility.OpenFolderPanel("Select obj model", "", "obj");
+        string[] files = LoadFiles(selectedAssetName);
+        Load(files);
     }
-    public void Load(string assetName)
+
+    public void Load(string[] assetName)
     {
         loaderModule.OnLoadCompleted += OnLoadCompleted;
-        loaderModule.LoadAsset(assetName);
+        for(int i = 0; i < assetName.Length; i++)
+        {
+            loaderModule.LoadAsset(assetName[i]);
+
+        }
+
     }
+
     private void OnLoadCompleted(GameObject loadedAsset)
     {
         loadedAsset.transform.SetParent(transform);
