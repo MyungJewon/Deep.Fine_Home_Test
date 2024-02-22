@@ -1,0 +1,9 @@
+diff a/.vscode/settings.json b/.vscode/settings.json	(rejected hunks)
+@@ -56,5 +56,5 @@
+         "temp/": true,
+         "Temp/": true
+     },
+-    "dotnet.defaultSolution": "HomeTest.sln"
++    "dotnet.defaultSolution": "Home_Test.sln"
+ }
+\ No newline at end of file

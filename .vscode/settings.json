@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Home_Test.sln"
+    "dotnet.defaultSolution": "HomeTest.sln"
 }
