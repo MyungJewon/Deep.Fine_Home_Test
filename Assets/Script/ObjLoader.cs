@@ -50,7 +50,7 @@ public class ObjImporter : MonoBehaviour
         mesh.RecalculateNormals(); // 법선 재계산
 
         // 메쉬 필터 컴포넌트에 메쉬 적용
-        GameObject obj = new GameObject("LoadedObject");
+        GameObject obj = new GameObject("Object");
         MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
