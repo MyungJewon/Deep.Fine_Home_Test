@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Threading.Tasks;
-using System;
-using UnityEngine.Events;
-public class Verticesmap { 
+public class Verticesmap {      //구조체 선언
 
     public List<Vector3> vertices = new List<Vector3>();
     public List<Vector2> uv = new List<Vector2>();
@@ -19,13 +16,13 @@ public class ObjImporter : MonoBehaviour
 {
     public GameObject LoadObj(string path)
     {
-        string[] lines = File.ReadAllLines(path);
+        string[] lines = File.ReadAllLines(path);   //파일경로로 읽기
 
         List<Vector3> vertices = new List<Vector3>();
         List<Vector2> uv = new List<Vector2>();
         List<int> triangles = new List<int>();
 
-        foreach (var line in lines)
+        foreach (var line in lines)     //모든 라인을 읽을때까지
         {
             if (line.StartsWith("v ")) // 정점 데이터
             {
@@ -48,7 +45,7 @@ public class ObjImporter : MonoBehaviour
                 foreach (var vertex in faceData)
                 {
                     var vertexInfo = vertex.Split('/');
-                    // OBJ 인덱스는 1부터 시작하지만, Unity 인덱스는 0부터 시작합니다.
+                    // OBJ 인덱스는 1부터 시작, Unity 인덱스는 0부터 시작
                     triangles.Add(int.Parse(vertexInfo[0]) - 1);
                 }
             }
@@ -74,13 +71,13 @@ public class ObjImporter : MonoBehaviour
 
     public Verticesmap LoadObjAsync(string path)
     {
-        string[] lines = File.ReadAllLines(path);
+        string[] lines = File.ReadAllLines(path);   //파일경로로 읽기
 
         List<Vector3> vertices = new List<Vector3>();
         List<Vector2> uv = new List<Vector2>();
         List<int> triangles = new List<int>();
 
-        foreach (var line in lines)
+        foreach (var line in lines)     //모든 데이터를 읽을때까지
         {
             if (line.StartsWith("v ")) // 정점 데이터
             {
@@ -103,13 +100,13 @@ public class ObjImporter : MonoBehaviour
                 foreach (var vertex in faceData)
                 {
                     var vertexInfo = vertex.Split('/');
-                    // OBJ 인덱스는 1부터 시작하지만, Unity 인덱스는 0부터 시작합니다.
-                    triangles.Add(int.Parse(vertexInfo[0]) - 1);
+                    // OBJ 인덱스는 1부터 시작, Unity 인덱스는 0부터 시작
+                    triangles.Add(int.Parse(vertexInfo[0]) -1 );
                 }
             }
         }
+        //main threads로 올려서 mesh 생성
         Verticesmap verticesmap= new Verticesmap(vertices,uv, triangles);
         return verticesmap;
-        // 메쉬 생성 및 적용
     }
 }
