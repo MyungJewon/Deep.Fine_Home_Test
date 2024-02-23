@@ -1,6 +1,7 @@
 using UnityEngine;
 using System; // 이벤트 정의를 위해 추가
 using System.Threading.Tasks;
+using System.Collections.Generic;
 public class LoaderModule : MonoBehaviour
 {
     ObjImporter objImporter= new ObjImporter();         //구조체 선언
@@ -18,7 +19,7 @@ public class LoaderModule : MonoBehaviour
         //task에서 실행이 불가능한 Unity Api를 메인 threads에서 진행
         Mesh mesh = new Mesh();
         mesh.vertices = loadedObject.vertices.ToArray();
-        mesh.uv = loadedObject.uv.ToArray();
+        mesh.uv = loadedObject.uv.ToArray(); //텍스처 불필요
         mesh.triangles = loadedObject.triangles.ToArray();
         mesh.RecalculateNormals(); // 법선 재계산
 
