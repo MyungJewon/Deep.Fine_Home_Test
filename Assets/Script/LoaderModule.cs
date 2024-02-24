@@ -7,22 +7,22 @@ public class LoaderModule : MonoBehaviour
 {
     ObjImporter objImporter= new ObjImporter();         //구조체 선언
     public event Action<GameObject> OnLoadCompleted;    //이벤트 선언
-
-    public void LoadAsset(string assetName)             //동기 시스템 
+    //동기 함수 
+    public void LoadAsset(string assetName)             
     {
         List<Verticesmap> loadedObject = objImporter.LoadObj(assetName);    //obj파일 읽기
         string gameobjectname=Path.GetFileNameWithoutExtension(assetName);
-        //메쉬 적용 함수
+        //메쉬,Object name 적용 함수
         OnLoadCompleted?.Invoke(Addmeshtoarrayfromobj(loadedObject,gameobjectname));                       //이벤트 반환
     }
+    //비동기 함수 
     public async Task<GameObject> LoadAssetAsync(string assetName)
     {
-        //obj파일을 읽고 데이터만 저장
-        List<Verticesmap> loadedObject =await Task.Run(() => objImporter.LoadObj(assetName));
-        //gameobject 이름설정
         string gameobjectname=Path.GetFileNameWithoutExtension(assetName);
         Debug.Log(gameobjectname+" 시작");
-        //메쉬 적용 함수
+        //obj파일을 읽고 데이터만 저장
+        List<Verticesmap> loadedObject =await Task.Run(() => objImporter.LoadObj(assetName));
+        //메쉬,Object name 적용 함수
         return Addmeshtoarrayfromobj(loadedObject,gameobjectname); 
     }
 
@@ -39,11 +39,11 @@ public class LoaderModule : MonoBehaviour
                     mesh.RecalculateNormals(); // 법선 재계산
 
                     // 메쉬 필터 컴포넌트에 메쉬 적용
-                    GameObject tempobj = new GameObject(loadedObject[i].objname);
+                    GameObject tempobj = new GameObject(loadedObject[i].groupname);
                     MeshFilter meshFilter = tempobj.AddComponent<MeshFilter>();
                     meshFilter.mesh = mesh;
 
-                    // MeshRenderer를 추가하여 Mesh를 렌더링합니다.
+                    // MeshRenderer를 추가하여 Mesh를 렌더링
                     MeshRenderer meshRenderer = tempobj.AddComponent<MeshRenderer>();
                     meshRenderer.material = new Material(Shader.Find("Standard"));
                     tempobj.transform.SetParent(objParent.transform);
@@ -54,6 +54,7 @@ public class LoaderModule : MonoBehaviour
             //그룹이 없는 오브젝트일 경우
             else{
                 Mesh mesh = new Mesh();
+                //loadedObject의 크기가 1이기 때문에 0 호출
                 mesh.vertices = loadedObject[0].vertices.ToArray();
                 mesh.triangles = loadedObject[0].triangles.ToArray();
                 mesh.RecalculateNormals(); // 법선 재계산
@@ -63,7 +64,7 @@ public class LoaderModule : MonoBehaviour
                 MeshFilter meshFilter = tempobj.AddComponent<MeshFilter>();
                 meshFilter.mesh = mesh;
 
-                // MeshRenderer를 추가하여 Mesh를 렌더링합니다.
+                // MeshRenderer를 추가하여 Mesh를 렌더링
                 MeshRenderer meshRenderer = tempobj.AddComponent<MeshRenderer>();
                 meshRenderer.material = new Material(Shader.Find("Standard"));
                 Debug.Log(gameobjectname+" 끝");
