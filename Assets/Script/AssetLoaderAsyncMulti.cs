@@ -20,6 +20,8 @@ public class AssetLoaderAsyncMulti : MonoBehaviour
         string[] directoryPath = LoadFiles(selectedAssetName);  //디랙토리의 파일 저장
         await Load(directoryPath);
         }catch(Exception ex){   //Data 예외처리
+            Debug.Log(ex);
+
             Debug.Log("Data type(obj) error");
         }
     }
