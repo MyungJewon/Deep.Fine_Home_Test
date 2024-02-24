@@ -34,7 +34,6 @@ public class AssetLoaderAsyncMulti : MonoBehaviour
         {
             tasks.Add(loaderModuleasyncmulti.LoadAssetAsync(assetNames[i]));    //모든 작업 task화
         }
-
         while (tasks.Count > 0)
         {
             var loadedAssets = await Task.WhenAny(tasks);   //task 반환하는 대로 나머지 작업수행
