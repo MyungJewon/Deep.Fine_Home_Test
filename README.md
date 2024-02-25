@@ -9,11 +9,8 @@
 
 1. 복합 .obj파일을 그대로 import 가능
 
-![Untitled 1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/d636ebe5-c406-4fab-90d4-aae3ff2a8eab)
-유니티 import를 사용한 .obj읽기
-
-![Untitled](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/6890f40e-d2d4-4fcb-ac88-31b33aac3d96)
-구현한 시스템을 사용한 .obj읽기
+![그림1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/8325ff4a-2e8f-4b97-9ed5-32afeea56d12)
+좌) 구현된시스템, 우) Unity로 import한 obj
 
 1. AssetLoaderAsyncMulti.cs 의 경우 복수의 .obj를 읽기 유용하게 하기 위해 파일이 아닌 폴더를 읽도록 함
 
@@ -56,7 +53,7 @@ public string[] LoadFiles(string directoryPath) //Directory에서 fileExtension 
 
 ### issus
 1. 특정한 .obj의 경우 삼각형 mesh가 아닌 사각형 mesh를 사용, 사각형일경우 삼각형으로 쪼개는 과정을 포함
-![스크린샷 2024-02-25 154215](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/a439275a-1a9d-429c-b714-a1eea90dc506)
+![그림2](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/0a56cd96-9b58-4564-ac1c-5ffbeb273a9d)
 ```csharp
  else if (line.StartsWith("f ")) // 면 데이터
     {
