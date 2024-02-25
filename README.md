@@ -9,10 +9,10 @@
 
 1. 복합 .obj파일을 그대로 import 가능
 
-(![Untitled 1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/d636ebe5-c406-4fab-90d4-aae3ff2a8eab)
+![Untitled 1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/d636ebe5-c406-4fab-90d4-aae3ff2a8eab)
 유니티 import를 사용한 .obj읽기
 
-(![Untitled](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/6890f40e-d2d4-4fcb-ac88-31b33aac3d96)
+![Untitled](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/6890f40e-d2d4-4fcb-ac88-31b33aac3d96)
 구현한 시스템을 사용한 .obj읽기
 
 1. AssetLoaderAsyncMulti.cs 의 경우 복수의 .obj를 읽기 유용하게 하기 위해 파일이 아닌 폴더를 읽도록 함
@@ -53,3 +53,25 @@ public string[] LoadFiles(string directoryPath) //Directory에서 fileExtension 
 
 1. List<Verticesmap> LoadObj(path): LoaderModule에서 호출되는 함수, .obj를 읽고 vertices와 mesh, group을 추출하는 함
 2. class Verticesmap: 그룹별 데이터(mesh, 그룹명) 저장편의를 위해 생성된 class선언
+
+### issus
+1. 특정한 .obj의 경우 삼각형 mesh가 아닌 사각형 mesh를 사용, 사각형일경우 삼각형으로 쪼개는 과정을 포함
+![스크린샷 2024-02-25 154215](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/a439275a-1a9d-429c-b714-a1eea90dc506)
+```csharp
+ else if (line.StartsWith("f ")) // 면 데이터
+    {
+        var faceDataString = line.Substring(2);
+        var faceData = faceDataString.Trim().Split(' ');
+        // mesh 확인 사각형이라면 삼각형 mesh로 변경
+        if (faceData.Length > 3)
+        {
+            faceData = new string[] { faceData[0], faceData[1], faceData[2], faceData[0], faceData[2], faceData[3] };
+        }
+        foreach (var vertex in faceData)
+        {
+            var vertexInfo = vertex.Split('/');
+            // OBJ 인덱스는 1부터 시작, Unity 인덱스는 0부터 시작
+            triangles.Add(int.Parse(vertexInfo[0]) - 1);
+        }
+    }
+```
