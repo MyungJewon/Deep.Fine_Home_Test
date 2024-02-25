@@ -53,7 +53,7 @@ public string[] LoadFiles(string directoryPath) //Directory에서 fileExtension 
 
 ### issus
 1. 특정한 .obj의 경우 삼각형 mesh가 아닌 사각형 mesh를 사용, 사각형일경우 삼각형으로 쪼개는 과정을 포함
-![그림2](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/0a56cd96-9b58-4564-ac1c-5ffbeb273a9d)
+![그림2](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/dd30d860-88aa-455e-ab2a-c3ef1d7df9fc)
 ```csharp
  else if (line.StartsWith("f ")) // 면 데이터
     {
