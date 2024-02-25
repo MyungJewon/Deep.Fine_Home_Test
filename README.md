@@ -9,14 +9,10 @@
 
 1. 복합 .obj파일을 그대로 import 가능
 
-![유니티 import를 사용한 .obj읽기](![Untitled 1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/d636ebe5-c406-4fab-90d4-aae3ff2a8eab)
-)
-
+(![Untitled 1](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/d636ebe5-c406-4fab-90d4-aae3ff2a8eab)
 유니티 import를 사용한 .obj읽기
 
-![구현한 시스템을 사용한 .obj읽기](![Untitled](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/6890f40e-d2d4-4fcb-ac88-31b33aac3d96)
-)
-
+(![Untitled](https://github.com/MyungJewon/Deep.Fine_Home_Test/assets/54784949/6890f40e-d2d4-4fcb-ac88-31b33aac3d96)
 구현한 시스템을 사용한 .obj읽기
 
 1. AssetLoaderAsyncMulti.cs 의 경우 복수의 .obj를 읽기 유용하게 하기 위해 파일이 아닌 폴더를 읽도록 함
