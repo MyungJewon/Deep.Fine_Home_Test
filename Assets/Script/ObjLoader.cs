@@ -35,7 +35,7 @@ public class ObjImporter : MonoBehaviour
             //복합 오브젝트인경우 g으로 나뉨
             if (line.StartsWith("g "))
             {
-                //여러 그룹이 있을경우 그룹의 시작과 끝을 알기위한 if
+                //여러 그룹이 있을경우 첫 그룹을 체크하기위한 if
                 if (objendcheck == true)
                 {
                     //vertices는 공유함으로 groupname, uv, triangles만 저장 vertices는 비워둠
@@ -44,10 +44,8 @@ public class ObjImporter : MonoBehaviour
                     //새로운 그룹을 저장하기위해 초기화
                     uv = new List<Vector2>();
                     triangles = new List<int>();
-                    //그룹 종료 알림
-                    objendcheck = false;
                     //새로운그룹명 저장
-                    groupname = line;
+                    groupname = line.Substring(2);
                 }
                 else
                 {
